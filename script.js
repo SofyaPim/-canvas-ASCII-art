@@ -5,7 +5,7 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
 const image1 = new Image();
-image1.src = 'img.png';
+image1.src = 'png-clipart-rick-and-morty-hq-resource-rick-and-morty.png';
 const inputSlider = document.getElementById("resolution");
 const inputLabel = document.getElementById("resolutionLabel");
 inputSlider.addEventListener("change", handleSlider);
@@ -140,6 +140,7 @@ image1.onload = function initialize() {
 };
 
 window.addEventListener("resize", resizeCanvas);
+
 
 
 
