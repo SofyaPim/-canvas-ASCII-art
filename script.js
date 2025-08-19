@@ -116,7 +116,7 @@ function handleSlider() {
 
 image1.onload = function initialize() {
 
-image1.src = 'img.png';
+image1.src = 'png-clipart-rick-and-morty-hq-resource-rick-and-morty.png';
   canvas.width = image1.width;
   canvas.height = image1.height;
   effect = new AsciiEffect(ctx, canvas.width, canvas.height);
@@ -131,6 +131,7 @@ window.addEventListener("load", function () {
   initialize();
 
 });
+
 
 
 
