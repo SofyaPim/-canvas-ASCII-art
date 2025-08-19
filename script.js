@@ -10,7 +10,7 @@ const inputSlider = document.getElementById("resolution");
 const inputLabel = document.getElementById("resolutionLabel");
 inputSlider.addEventListener("change", handleSlider);
 
-
+let originalWidth, originalHeight; // Хранение оригинальных размеров изображения
 
 class Cell {
   constructor(x, y, symbol, color) {
@@ -42,7 +42,7 @@ class AsciiEffect {
     this.#height = height;
     this.#ctx.drawImage(image1, 0, 0, this.#width, this.#height);
     this.#pixels = this.#ctx.getImageData(0, 0, this.#width, this.#height);
-    console.log(this.#pixels.data);
+    // console.log(this.#pixels.data);
   }
   #convertToSymbol(g) {
     
@@ -88,7 +88,7 @@ class AsciiEffect {
         }
       }
     }
-    console.log(this.#imageCellArray);
+    // console.log(this.#imageCellArray);
   }
   #drawAscii() {
     this.#ctx.clearRect(0, 0, this.#width, this.#height);
@@ -102,44 +102,35 @@ class AsciiEffect {
   }
 }
 let effect;
-let originalWidth = image1.width;
-let originalHeight = image1.height;
-let aspectRatio = originalWidth / originalHeight;
-function resizeCanvas() {
-    // Получаем ширину и высоту окна
-    let windowWidth = window.innerWidth * 0.8;
-    let windowHeight = window.innerHeight * 0.8;
-
-    // Устанавливаем размеры канваса с сохранением пропорций
-    if (windowWidth / windowHeight > aspectRatio) {
-        canvas.width = windowHeight * aspectRatio;
-        canvas.height = windowHeight;
-    } else {
-        canvas.width = windowWidth;
-        canvas.height = windowWidth / aspectRatio;
-    }
-
-    // Перерисовываем эффект ASCII после изменения размера канваса
-    effect = new AsciiEffect(ctx, canvas.width, canvas.height);
-    handleSlider();
-}
 
 function handleSlider() {
   if(inputSlider.value == 1){
     inputLabel.innerHTML = 'Original Image';
     ctx.drawImage(image1, 0, 0, canvas.width, canvas.height)
   } else {
-     inputLabel.innerHTML = 'Resolution: ' + inputSlider.value + '&zwj;px';
+     inputLabel.innerHTML = 'Resolution: ' + inputSlider.value + ' px';
      ctx.font = parseInt(inputSlider.value) + 'px Verdana';
      effect.draw(parseInt(inputSlider.value));
   }
 }
 
 image1.onload = function initialize() {
- resizeCanvas(); 
-};
 
-window.addEventListener("resize", resizeCanvas);
+image1.src = 'img.png';
+  canvas.width = image1.width;
+  canvas.height = image1.height;
+  effect = new AsciiEffect(ctx, canvas.width, canvas.height);
+  handleSlider();
+};
+window.addEventListener("resize", function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+});
+window.addEventListener("load", function () {
+  initialize();
+
+});
 
 
 
